@@ -1,0 +1,58 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Comparison Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Image Comparison Generator</h1>
+        
+        <form action="{{ url_for('generate') }}" method="post">
+            <div class="prompt-row">
+                <div class="prompt-container">
+                    <label for="prompt1">First Prompt:</label>
+                    <textarea name="prompt1" required></textarea>
+                </div>
+                
+                <div class="prompt-container">
+                    <label for="prompt2">Second Prompt:</label>
+                    <textarea name="prompt2" required></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="num_images">Number of Images per Prompt:</label>
+                <select name="num_images" required>
+                    {% for count in image_counts %}
+                        <option value="{{ count }}">{{ count }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="model">Select Model:</label>
+                <select name="model" required>
+                    {% for model in available_models %}
+                        <option value="{{ model }}">{{ model }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            {% if session.get('last_seed') %}
+            <div class="form-group">
+                <label>Seed Choice:</label>
+                <input type="radio" name="use_last_seed" value="new" checked> New Random Seed
+                <input type="radio" name="use_last_seed" value="last"> Use Last Seed ({{ session.last_seed }})
+                <input type="hidden" name="last_seed" value="{{ session.last_seed }}">
+            </div>
+            {% endif %}
+
+            <button type="submit">Generate Images</button>
+        </form>
+    </div>
+</body>
+</html>
+
+<!-- Rest of the templates remain the same -->

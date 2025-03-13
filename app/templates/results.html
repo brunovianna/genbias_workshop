@@ -1,0 +1,56 @@
+
+<!-- templates/results.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generated Images</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Generated Images</h1>
+        
+        <div class="results-container">
+            <div class="prompt-results">
+                <h2>Prompt 1: {{ prompt1 }}</h2>
+                <div class="image-grid">
+                    {% for image in images.prompt1 %}
+                        <img src="{{ image }}" alt="Generated image for prompt 1">
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="prompt-results">
+                <h2>Prompt 2: {{ prompt2 }}</h2>
+                <div class="image-grid">
+                    {% for image in images.prompt2 %}
+                        <img src="{{ image }}" alt="Generated image for prompt 2">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <form action="{{ url_for('save_comparison') }}" method="post">
+            <input type="hidden" name="prompt1" value="{{ prompt1 }}">
+            <input type="hidden" name="prompt2" value="{{ prompt2 }}">
+            <input type="hidden" name="seed" value="{{ seed }}">
+            <input type="hidden" name="model" value="{{ model }}">
+            {% for image in images.prompt1 %}
+                <input type="hidden" name="images1[]" value="{{ image }}">
+            {% endfor %}
+            {% for image in images.prompt2 %}
+                <input type="hidden" name="images2[]" value="{{ image }}">
+            {% endfor %}
+
+            <div class="form-group">
+                <label for="notes">Notes about these images:</label>
+                <textarea name="notes" rows="4"></textarea>
+            </div>
+
+            <button type="submit">Save Comparison</button>
+        </form>
+
+        <a href="{{ url_for('index') }}" class="button">Generate New Comparison</a>
+    </div>
+</body>
+</html>

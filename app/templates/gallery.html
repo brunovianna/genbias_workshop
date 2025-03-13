@@ -1,0 +1,37 @@
+
+<!-- templates/gallery.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Saved Comparisons Gallery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Saved Comparisons Gallery</h1>
+        
+        {% for comparison in comparisons %}
+        <div class="saved-comparison">
+            <div class="comparison-info">
+                <h2>Comparison #{{ comparison[0] }}</h2>
+                <p><strong>Date:</strong> {{ comparison[8] }}</p>
+                <p><strong>Prompt 1:</strong> {{ comparison[1] }}</p>
+                <p><strong>Prompt 2:</strong> {{ comparison[2] }}</p>
+                <p><strong>Model:</strong> {{ comparison[6] }}</p>
+                <p><strong>Seed:</strong> {{ comparison[5] }}</p>
+                <p><strong>Notes:</strong> {{ comparison[7] }}</p>
+            </div>
+            
+            <div class="saved-images">
+                <!-- You'll need to implement the proper image rendering here -->
+                {% for image in comparison[9].split(',') %}
+                    <img src="{{ image }}" alt="Saved comparison image">
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+        
+        <a href="{{ url_for('index') }}" class="button">Generate New Comparison</a>
+    </div>
+</body>
+</html>
