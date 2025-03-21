@@ -13,7 +13,9 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Change this in production
 
 # Automatic1111 API configuration
-AUTOMATIC1111_URL = "https://027511349adb11cb59.gradio.live:7860"  # Adjust to your server's address
+#AUTOMATIC1111_URL = "https://027511349adb11cb59.gradio.live:7860"  # Adjust to your server's address
+
+AUTOMATIC1111_URL = "http://127.0.0.1:7860"  # Adjust to your server's address
 
 def get_available_models():
     """Fetch available models from Automatic1111 API"""
