@@ -26,6 +26,78 @@ RUNPOD_API_KEY = os.getenv('RUNPOD_API_KEY')  # Recommended to use environment v
 RUNPOD_ENDPOINT_ID = os.getenv('RUNPOD_ENDPOINT_ID')  # Your specific RunPod endpoint ID
 RUNPOD_BASE_URL = "https://api.runpod.ai/v2"
 
+
+def get_script_args():
+
+    XYPlotAvailableScripts = [
+        "Nothing",
+        "Seed",
+        "Var. seed",
+        "Var. strength",
+        "Steps",
+        "Hires steps",
+        "CFG Scale",
+        "Prompt S/R",
+        "Prompt order",
+        "Sampler",
+        "Hires sample",
+        "Checkpoint name",
+        "Negative Guidance minimum sigma",
+        "Sigma Churn",
+        "Sigma min",
+        "Sigma max",
+        "Sigma noise",
+        "Eta",
+        "Clip skip",
+        "Denoising",
+        "Hires upscaler",
+        "Cond. Image Mask Weight",
+        "VAE",
+        "Styles"
+    ]
+
+    XAxisType = "Prompt S/R"
+    #XAxisType = "Steps"
+    XAxisValues = "man, woman"
+    XAxisDropdown = ""
+    YAxisType = "Nothing"
+    YAxisValues = "k_dpm_2, k_dpm_2_a"
+    YAxisDropdown = ""
+    ZAxisType = "Nothing"
+    ZAxisValues = ""
+    ZAxisDropdown = ""
+    drawLegend = True
+    includeSeparateImages= "True"
+    includeSubGrids = "True"
+    noFixedSeed = "False"
+    marginSize = 4
+    noGrid = "False"
+    vary_seeds_z = "False"
+    margin_size = 4
+    csv_mode = "False"
+
+    return [
+        XYPlotAvailableScripts.index(XAxisType), 
+        XAxisValues, 
+        XAxisDropdown,
+        XYPlotAvailableScripts.index(YAxisType), 
+        YAxisValues, 
+        YAxisDropdown,
+        XYPlotAvailableScripts.index(ZAxisType), 
+        ZAxisValues, 
+        ZAxisDropdown,
+        drawLegend, 
+        includeSeparateImages,
+        includeSubGrids, 
+        noFixedSeed, 
+        marginSize, 
+        noGrid,
+        vary_seeds_z,
+        margin_size,
+        csv_mode
+    ]
+
+
 def get_available_models():
 
     models = ["deliberate_v2", "sd_xl_base_1.0" ]
@@ -65,7 +137,9 @@ def generate_images(prompt, num_images, model, seed=None):
                 "width": 512,
                 "height": 512,
                 "steps": 20,
-                "cfg_scale": 7
+                "cfg_scale": 7,
+                "script_name": "x/y/z plot",
+                "script_args": get_script_args(),
             }
         }
     }
