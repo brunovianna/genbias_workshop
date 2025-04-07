@@ -4,10 +4,10 @@ services:
     build:
       context: .
     ports:
-      - 8000:8000
+      - 80:5001
     volumes:
       - ./app:/app
-    network_mode: "host"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    # network_mode: "host"
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
 

@@ -35,18 +35,25 @@ RUN adduser \
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
 # Leverage a bind mount to requirements.txt to avoid having to copy them into
 # into this layer.
+COPY requirements.txt requirements.txt
+
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
     python -m pip install -r requirements.txt
 
+#COPY . .
+
+# Set environment variable for Flask (optional but good practice)
+ENV FLASK_APP=app:app
+
 RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
 
 # Switch to the non-privileged user to run the application.
-USER root
+USER appuser
 
 
 # Expose the port that the application listens on.
-EXPOSE 8000
+EXPOSE 5001
 
 # Run the application.
-CMD python3 app.py
+CMD ["gunicorn", "--bind", "0.0.0.0:5001", "--workers", "3", "app:app"]
