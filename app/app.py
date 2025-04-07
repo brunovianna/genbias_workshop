@@ -253,10 +253,13 @@ def generate():
         return redirect(url_for('index'))
     
     # Generate second set of images with the same seed
-    images2, _ = generate_images(prompt2, num_images, model, used_seed)
-    if not images2:
-        flash('Error generating second set of images.', 'error')
-        return redirect(url_for('index'))
+    if (prompt2==""):
+        images2=[]
+    else:
+        images2, _ = generate_images(prompt2, num_images, model, used_seed)
+        if not images2:
+            flash('Error generating second set of images.', 'error')
+            return redirect(url_for('index'))
     
     # Store the seed in session for potential reuse
     session['last_seed'] = used_seed
