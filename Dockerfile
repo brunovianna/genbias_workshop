@@ -49,11 +49,11 @@ ENV FLASK_APP=app:app
 RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
 
 # Switch to the non-privileged user to run the application.
-USER appuser
+#USER appuser
 
 
 # Expose the port that the application listens on.
 EXPOSE 5001
 
 # Run the application.
-CMD ["gunicorn", "--bind", "0.0.0.0:5001", "--workers", "1", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5001", "--workers", "1",  "--timeout", "120", "app:app"]
