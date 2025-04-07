@@ -4,9 +4,13 @@ services:
     build:
       context: .
     ports:
-      - 80:5001
+      - 7880:5001
     volumes:
       - ./app:/app
+    environment:
+      - VIRTUAL_HOST=${DOMAIN}
+      - LETSENCRYPT_HOST=${DOMAIN}
+      - LETSENCRYPT_EMAIL=${EMAIL}
     # network_mode: "host"
     # extra_hosts:
     #   - "host.docker.internal:host-gateway"
